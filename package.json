@@ -1,0 +1,19 @@
+{
+  "name": "secode",
+  "version": "0.1.0",
+  "description": "Manipulating security codes (for China market currently)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/emptist/secode.git"
+  },
+  "author": "Jigme Ko <jigme1968@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/emptist/secode/issues"
+  },
+  "homepage": "https://github.com/emptist/secode#readme"
+}

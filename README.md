@@ -20,6 +20,7 @@ $ npm install secode
 
 ## Usage
 
+'sina' is the same as 1.
 
 ```js
 var secode = require('secode');

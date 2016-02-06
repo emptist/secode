@@ -1,9 +1,13 @@
 {
   "name": "secode",
-  "version": "0.1.0a",
+  "version": "0.1.1",
   "description": "Manipulating security codes (for China market currently)",
   "main": "./lib/index.js",
   "scripts": {
+    "cup": "coffee -bcmo lib/ src/ & git commit -am 'modified' & git push ",
+    "cupminor": "version minor & coffee -bcmo lib/ src/ & git commit -am 'minor update' & git push ",
+    "cupmajor": "version major & coffee -bcmo lib/ src/ & git commit -am 'major update' & git push ",
+    "cuppatch": "version patch & coffee -bcmo lib/ src/ & git commit -am 'patch update' & git push ",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

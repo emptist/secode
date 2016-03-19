@@ -19,7 +19,11 @@ convertcode =  (acode,aprefix=1)->
       when 2 then "#{code[2..]}#{code[..1]}"
       when 3 then "#{code[2..]}.#{code[..1]}"
       when 6
-        if code[1] is 'h' then "0#{code[2..]}" else "1#{code[2..]}"
+        if code[1] is 'h'
+          "0#{code[2..]}"
+        else if code[1] is 'z'
+          "1#{code[2..]}"
+        else throw "未知代碼 #{code}"
 
   else if code.length > 6
     if /^\d{7}$/.test code
@@ -32,23 +36,28 @@ convertcode =  (acode,aprefix=1)->
         when 3
           if code[0] is '0' then "#{code[1..]}.sh" else "#{code[1..]}.sz"
         when 6 then code
-    else
+    else if /^\d{6}/.test code
       return convertcode(code[..5],prefix)
-  else if code[0] in ['5','6','9']
-    return switch prefix
-      when 0 then code
-      when 1 then "sh#{code}"
-      when 2 then "#{code}sh"
-      when 3 then "#{code}.sh"
-      when 6 then "0#{code}"
-  else
-    return switch prefix
-      when 0 then code
-      when 1 then "sz#{code}"
-      when 2 then "#{code}sz"
-      when 3 then "#{code}.sz"
-      when 6 then "1#{code}"
+    else throw "未知代碼 #{code}"
 
+  else if /^\d{6}$/.test code #code.length is 6
+    if code[0] in ['5','6','9']
+      return switch prefix
+        when 0 then code
+        when 1 then "sh#{code}"
+        when 2 then "#{code}sh"
+        when 3 then "#{code}.sh"
+        when 6 then "0#{code}"
+    else
+      return switch prefix
+        when 0 then code
+        when 1 then "sz#{code}"
+        when 2 then "#{code}sz"
+        when 3 then "#{code}.sz"
+        when 6 then "1#{code}"
+  else
+    throw "未知代碼 #{code}"
+    
 convertcodes = (string, prefix)->
   ("#{convertcode cd, prefix}" for cd in string.split(',')).join(',')
 

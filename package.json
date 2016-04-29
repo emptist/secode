@@ -1,6 +1,6 @@
 {
   "name": "secode",
-  "version": "0.2.1",
+  "version": "1.0.0",
   "description": "Manipulating security codes (for China market currently)",
   "main": "./src/secode",
   "scripts": {

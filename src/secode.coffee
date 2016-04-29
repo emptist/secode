@@ -64,3 +64,5 @@ convertcodes = (string, prefix)->
 module.exports =
   recode: convertcode
   restring: convertcodes
+
+#console.log convertcode '110038'

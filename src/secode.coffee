@@ -41,7 +41,7 @@ convertcode =  (acode,aprefix=1)->
     else throw "未知代碼 #{code}"
 
   else if /^\d{6}$/.test code #code.length is 6
-    if code[0] in ['5','6','9']
+    if /^(5|6|9|11)/.test code #code[0] in ['5','6','9']
       return switch prefix
         when 0 then code
         when 1 then "sh#{code}"
@@ -57,7 +57,7 @@ convertcode =  (acode,aprefix=1)->
         when 6 then "1#{code}"
   else
     throw "未知代碼 #{code}"
-    
+
 convertcodes = (string, prefix)->
   ("#{convertcode cd, prefix}" for cd in string.split(',')).join(',')
 

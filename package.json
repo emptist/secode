@@ -4,9 +4,17 @@
   "description": "Manipulating security codes (for China market currently)",
   "main": "./lib/secode.js",
   "scripts": {
-    "preversion": "coffee -bcmo lib src; git commit -am 'modified and re-build js;'",
-    "postversion": "git push;",
-    "prepublish": "cd ..; echo 現在發佈",
+    "patch": "npm-run-all gitcommit vpatch pub",
+    "minor": "npm-run-all gitcommit vminor pub",
+    "major": "npm-run-all gitcommit vmajor pub",
+    "gitcommit": "git add --all; git commit -am 'modified'",
+    "vpatch": "npm version patch",
+    "vminor": "npm version minor",
+    "vmajor": "npm version major",
+    "postversion": "git push",
+    "prepub": "echo 已經git push 準備 publish...",
+    "pub": "npm publish ../secode",
+    "prepublish": "echo 現在發佈...",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

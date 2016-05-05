@@ -41,7 +41,7 @@ convertcode =  (acode,aprefix=1)->
     else throw "未知代碼 #{code}"
 
   else if /^\d{6}$/.test code #code.length is 6
-    if /^(5|6|9|11)/.test code #code[0] in ['5','6','9']
+    if /^(5|6|9|11|13)/.test code #code[0] in ['5','6','9']
       return switch prefix
         when 0 then code
         when 1 then "sh#{code}"

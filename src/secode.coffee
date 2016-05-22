@@ -28,6 +28,9 @@ convertcode =  (acode,aprefix=1)->
   if /^[a-z]{3}/i.test code # 當作國外股票
     return switch prefix
       when 1 then "gb_#{code}"
+  if /^gb_[a-z]{2}/.test code # 當作國外股票
+    return switch prefix
+      when 1 then code
 
   if /^s[h|z]\d{6}$/i.test code
     return switch prefix

@@ -6,12 +6,29 @@ convertcode =  (acode,aprefix=1)->
     3: '000001.sh'
     6: '0600663','1159915' # 126.net, 163.com
   ###
+  ###
+  新浪即時行情代碼特點:
+    道指 gb_$dji
+    納指 gb_ixic
+    美股 gb_小寫字母公司代碼 gb_yhoo
+    NYMEX原油 hf_CL
+    外匯 全部大寫字母 USDJPY等等
+    富時 b_UKX
+    道瓊斯歐元區指數 b_SX5E
+  ###
   if aprefix in ['sina','ht']
     prefix = 1
   else
     prefix = aprefix
 
   code = acode.trim()
+  if /^[A-Z]{6}$/i.test code # 當作外匯
+    return switch prefix
+      when 1 then code.toUpperCase()
+  if /^[a-z]{3}/i.test code # 當作國外股票
+    return switch prefix
+      when 1 then "gb_#{code}"
+
   if /^s[h|z]\d{6}$/i.test code
     return switch prefix
       when 0 then code[2..]

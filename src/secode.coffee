@@ -85,4 +85,4 @@ module.exports =
   recode: convertcode
   restring: convertcodes
 
-#console.log convertcode '110038'
+#console.log convertcodes 'gb_ibm,yhoo'#'110038'

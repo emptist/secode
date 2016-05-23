@@ -43,7 +43,7 @@ convertcode =  (acode,aprefix=1)->
           "0#{code[2..]}"
         else if code[1] is 'z'
           "1#{code[2..]}"
-        else throw "未知代碼 #{code}"
+        else throw "secode >> 未知代碼:/^s[h|z]\d{6}$/i.test code #{code}"
 
   else if code.length > 6
     if /^\d{7}$/.test code
@@ -58,7 +58,7 @@ convertcode =  (acode,aprefix=1)->
         when 6 then code
     else if /^\d{6}/.test code
       return convertcode(code[..5],prefix)
-    else throw "未知代碼 #{code}"
+    else throw "secode >> 未知代碼 code.length > 6 #{code}"
 
   else if /^\d{6}$/.test code #code.length is 6
     if /^(5|6|9|11|13)/.test code #code[0] in ['5','6','9']
@@ -76,7 +76,7 @@ convertcode =  (acode,aprefix=1)->
         when 3 then "#{code}.sz"
         when 6 then "1#{code}"
   else
-    throw "未知代碼 #{code}"
+    throw "secode >> 未知代碼 #{code}"
 
 convertcodes = (string, prefix)->
   ("#{convertcode cd, prefix}" for cd in string.split(',')).join(',')

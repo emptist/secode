@@ -25,7 +25,7 @@ convertcode =  (acode,aprefix=1)->
   if /^[A-Z]{6}$/i.test code # 當作外匯
     return switch prefix
       when 0 then code
-      when 1 then "#{fx_s}#{code}" #code.toUpperCase()
+      when 1 then "fx_s#{code}" #code.toUpperCase()
 
   else if /^[a-z]{3}/i.test code # 當作國外股票
     return switch prefix

@@ -25,14 +25,16 @@ convertcode =  (acode,aprefix=1)->
   if /^[A-Z]{6}$/i.test code # 當作外匯
     return switch prefix
       when 1 then code.toUpperCase()
-  if /^[a-z]{3}/i.test code # 當作國外股票
+
+  else if /^[a-z]{3}/i.test code # 當作國外股票
     return switch prefix
       when 1 then "gb_#{code}"
-  if /^gb_[a-z]{2}/.test code # 當作國外股票
+
+  else if /^gb_[a-z]{2}/.test code # 當作國外股票
     return switch prefix
       when 1 then code
 
-  if /^s[h|z]\d{6}$/i.test code
+  else if /^s[h|z]\d{6}$/i.test code
     return switch prefix
       when 0 then code[2..]
       when 1 then code

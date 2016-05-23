@@ -24,15 +24,24 @@ convertcode =  (acode,aprefix=1)->
   code = acode.trim()
   if /^[A-Z]{6}$/i.test code # 當作外匯
     return switch prefix
-      when 1 then code.toUpperCase()
+      when 0 then code
+      when 1 then "#{fx_s}#{code}" #code.toUpperCase()
 
   else if /^[a-z]{3}/i.test code # 當作國外股票
     return switch prefix
+      when 0 then code
       when 1 then "gb_#{code}"
 
   else if /^gb_[a-z]{2}/.test code # 當作國外股票
     return switch prefix
+      when 0 then code[3..]
       when 1 then code
+
+  else if /^fx_s[a-z]{2}/.test code # 當作國外股票
+    return switch prefix
+      when 0 then code[4..]
+      when 1 then code
+
 
   else if /^s[h|z]\d{6}$/i.test code
     return switch prefix

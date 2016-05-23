@@ -30,12 +30,12 @@ convertcode =  (acode,aprefix=1)->
   else if /^[a-z]{3}/i.test code # 當作國外股票
     return switch prefix
       when 0 then code
-      when 1 then "gb_#{code}"
+      when 1 then "gb_#{code.replace('.','$')}"
 
   else if /^gb_[a-z]{2}/.test code # 當作國外股票
     return switch prefix
-      when 0 then code[3..]
-      when 1 then code
+      when 0 then code.replace('$','.')[3..]
+      when 1 then code.replace('$','.')
 
   else if /^fx_s[a-z]{2}/.test code # 當作國外股票
     return switch prefix

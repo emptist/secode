@@ -17,23 +17,24 @@ class QQCode
         callback err, null
         return
 
-      eval body.toString()
-      hint = v_hint.split(@symbol.toLowerCase())
 
-    console.log "[debugging] qqdata >> recode: ", @symbol
+      result = ''
+      e = null
+      try
+        eval body.toString()
+        hint = v_hint.split(@symbol.toLowerCase())
 
-    result = ''
-    e = null
-    try
-      result1 = hint[0].split('~')[0]
-      result2 = symbol.toUpperCase()
-      result3 = hint[1].split('~')[0].toUpperCase()
-      result =  "#{result1}#{result2}#{result3}"
-    catch error
-      console.error error, hint
-      e = error
+        #console.log "[debugging] qqdata >> recode: ", @symbol,hint
 
-    callback e, result
+        result1 = hint[0].split('~')[0]
+        result2 = symbol.toUpperCase()
+        result3 = hint[1].split('~')[0].toUpperCase()
+        result =  "#{result1}#{result2}#{result3}"
+      catch error
+        console.error "[debugging] qqdata >> recode: @symbol", error, hint
+        e = error
+
+      callback e, result
 
 
 module.exports = QQCode

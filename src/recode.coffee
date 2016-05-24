@@ -27,8 +27,7 @@ convertcode =  (acode,aprefix=1)->
       when 0 then code
       when 1 then "fx_s#{code}" #code.toUpperCase()
 
-  else if /^[a-z]{3}/i.test code or
-    /^[a-z]{2}$/i.test code or /^[a-z]$/i.test code # 當作國外股票
+  else if /^[a-z]{3}/i.test code or /^[a-z]{2}$/i.test code or /^[a-z]$/i.test code # 當作國外股票
     return switch prefix
       when 0 then code
       when 1 then "gb_#{code.replace('.','$')}"

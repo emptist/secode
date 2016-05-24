@@ -27,7 +27,7 @@ class QQCode
         #console.log "[debugging] qqdata >> recode: ", @symbol,hint
 
         result1 = hint[0].split('~')[0]
-        result2 = symbol.toUpperCase()
+        result2 = @symbol.toUpperCase()
         result3 = hint[1].split('~')[0].toUpperCase()
         result =  "#{result1}#{result2}#{result3}"
       catch error

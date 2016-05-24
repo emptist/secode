@@ -101,7 +101,7 @@ class QQCode
     @region = con.region ? 'all'
     @options = con.options ? method: 'GET'
     @fetchUrl = con.fetchUrl
-    
+
   url: ->
     "http://smartbox.gtimg.cn/s3/?v=2&q=#{@symbol}&t=#{@region}"
 
@@ -112,7 +112,7 @@ class QQCode
         return
 
       eval body.toString()
-      hint = v_hint.split(@symbol)
+      hint = v_hint.split(@symbol.toLowerCase())
 
     console.log "[debugging] qqdata >> recode: ", @symbol
 

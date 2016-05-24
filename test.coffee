@@ -1,4 +1,4 @@
-secode = require('./src/secode.coffee')
+secode = require('./src/recode.coffee')
 
 console.log secode.restring('159915,600663,USDJPY,yhoo,ibm','sina');
 for each in ['sz159915','159902','sh600000','150153.sz']

@@ -2,7 +2,7 @@
   "name": "secode",
   "version": "1.0.11",
   "description": "Manipulating security codes (for China market currently)",
-  "main": "./src/secode",
+  "main": "secode",
   "scripts": {
     "patch": "npm-run-all gitcommit vpatch pub",
     "minor": "npm-run-all gitcommit vminor pub",
@@ -25,6 +25,9 @@
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/emptist/secode/issues"
+  },
+  "dependencies": {
+    "fetch": "^1.0.1"
   },
   "homepage": "https://github.com/emptist/secode#readme"
 }

@@ -12,7 +12,7 @@ class QQCode
     "http://smartbox.gtimg.cn/s3/?v=2&q=#{@symbol}&t=#{@region}"
 
   recode: (callback)=>
-    @fetchUrl @url(), @options, (err,meta,body)=>
+    fetchUrl @url(), @options, (err,meta,body)=>
       if err?
         callback err, null
         return

@@ -27,17 +27,18 @@ convertcode =  (acode,aprefix=1)->
       when 0 then code
       when 1 then "fx_s#{code}" #code.toUpperCase()
 
-  else if /^[a-z]{3}/i.test code # 當作國外股票
+  else if /^[a-z]{3}/i.test code or
+    /^[a-z]{2}$/i.test code or /^[a-z]$/i.test code # 當作國外股票
     return switch prefix
       when 0 then code
       when 1 then "gb_#{code.replace('.','$')}"
 
-  else if /^gb_[a-z]{2}/.test code # 當作國外股票
+  else if /^gb_[a-z]{1}/i.test code # 當作國外股票
     return switch prefix
       when 0 then code.replace('$','.')[3..]
       when 1 then code.replace('$','.')
 
-  else if /^fx_s[a-z]{2}/.test code # 當作國外股票
+  else if /^fx_s[a-z]{2}/i.test code # 新浪外匯
     return switch prefix
       when 0 then code[4..]
       when 1 then code

@@ -98,5 +98,4 @@ convertcodes = (string, prefix)->
 module.exports =
   recode: convertcode
   restring: convertcodes
-  QQCode: QQCode
 #console.log convertcodes 'gb_ibm,yhoo'#'110038'

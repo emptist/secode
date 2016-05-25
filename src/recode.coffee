@@ -25,22 +25,22 @@ convertcode =  (acode,aprefix=1)->
   if /^[A-Z]{6}$/i.test code # 當作外匯
     return switch prefix
       when 0 then code
-      when 1 then "fx_s#{code}" #code.toUpperCase()
+      when 1 then "fx_s#{code.toLowCase()}"
 
   else if /^[a-z]{3}/i.test code or /^[a-z]{2}$/i.test code or /^[a-z]$/i.test code # 當作國外股票
     return switch prefix
-      when 0 then code
-      when 1 then "gb_#{code.replace('.','$')}"
+      when 0 then code#.toLowCase()?
+      when 1 then "gb_#{code.toLowCase().replace('.','$')}"
 
   else if /^gb_[a-z]{1}/i.test code # 當作國外股票
     return switch prefix
-      when 0 then code.replace('$','.')[3..]
-      when 1 then code.replace('$','.')
+      when 0 then code.replace('$','.')[3..]#.toLowCase()?
+      when 1 then code.toLowCase().replace('$','.')
 
   else if /^fx_s[a-z]{2}/i.test code # 新浪外匯
     return switch prefix
       when 0 then code[4..]
-      when 1 then code
+      when 1 then code.toLowCase()
 
 
   else if /^s[h|z]\d{6}$/i.test code

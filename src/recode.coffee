@@ -5,6 +5,7 @@ convertcode =  (acode,aprefix=1)->
     2: '000001sh'
     3: '000001.sh'
     6: '0600663','1159915' # 126.net, 163.com
+    'ib': ib broker
   ###
   ###
   新浪即時行情代碼特點:
@@ -27,7 +28,7 @@ convertcode =  (acode,aprefix=1)->
       when 0 then code
       when 1 then "fx_s#{code.toLowerCase()}"
 
-  else if /^[a-z]{3}/i.test code or /^[a-z]{2}$/i.test code or /^[a-z]$/i.test code # 當作國外股票
+  else if (/^[a-z]{3}/i.test code) or (/^[a-z]{2}$/i.test code) or (/^[a-z]$/i.test code) # 當作國外股票
     return switch prefix
       when 0 then code#.toLowerCase()?
       when 1 then "gb_#{code.toLowerCase().replace('.','$')}"

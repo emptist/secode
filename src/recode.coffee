@@ -23,7 +23,7 @@ convertcode =  (acode,aprefix=1)->
     prefix = aprefix
 
   code = acode.trim()
-  if /^[A-Z]{6}$/i.test code # 當作外匯
+  if (/^[A-Z]{6}$/i.test code) or (/^[A-Z]{3}\.[A-Z]{3}$/i.test code) # 當作外匯
     return switch prefix
       when 0 then code
       when 1 then "fx_s#{code.toLowerCase()}"

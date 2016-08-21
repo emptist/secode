@@ -1,4 +1,6 @@
 convertcode =  (acode,aprefix=1)->
+  unless acode?
+    debugger
   ###prefix:
     0: '000001'
     1: 'sh000001'
@@ -27,7 +29,7 @@ convertcode =  (acode,aprefix=1)->
     return switch prefix
       when 0 then code
       when 1 then "hk#{code}"
-      
+
   else if (/usd/i.test code) and ((/^[A-Z]{6}$/i.test code) or (/^[A-Z]{3}\.[A-Z]{3}$/i.test code)) # 當作外匯
     return switch prefix
       when 0 then code

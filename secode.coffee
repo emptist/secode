@@ -8,7 +8,7 @@ QQCode = require './src/qqcode'
 # QQ數據有此信息
 # 注意 ib對於外匯交易日的收盤時間如何規定
 # [臨時]
-nowTrading:(證券代碼) ->
+nowTrading = (證券代碼) ->
   d = new Date()
   h = d.getUTCHours()
   m = d.getMinutes()

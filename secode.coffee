@@ -18,8 +18,20 @@ nowTrading:(證券代碼) ->
     when 'g' then return (d.getDay() < 7) and ((16 + 4) > h > (8 + 4))
     when 'f' then return (d.getDay() < 6) and (((h is 17) and (m > 15)) or (h isnt 17))
 
+當日盤後 = (證券代碼) ->
+  d = new Date()
+  h = d.getUTCHours()
+  m = d.getMinutes()
+  switch recode(證券代碼)[0]
+    when 's' then return (d.getDay() < 6) and ((14 - 8) < h < 24) # 深滬
+    when 'h' then return (d.getDay() < 6) and ((15 - 8) < h < 24) # HongKong
+    when 'g' then return (d.getDay() < 7) and ((16 + 4) < h < 24) # global
+    when 'f' then return (d.getDay() < 6) and (h > 17) and (m < 15) # forex   # 注意 ib對於外匯交易日的收盤17:15-17:00
+
+
 module.exports =
   QQCode:QQCode
   recode:recode
   restring:restring
   nowTrading:nowTrading
+  當日盤後:當日盤後

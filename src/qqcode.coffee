@@ -1,10 +1,12 @@
 {fetchUrl} = require 'fetch'
 
 # 查奇葩的騰訊代碼
+# new QQCode({symbol:'07000',region:'all',options:{method:'GET'}})
 class QQCode
   constructor:(con={})->
-    @symbol = con.symbol
-    @region = con.region ? 'all'
+    {@symbol, @region='all'} = con
+    #@symbol = con.symbol
+    #@region = con.region ? 'all'
     @options = con.options ? method: 'GET'
     #@fetchUrl = con.fetchUrl
 

@@ -1,6 +1,42 @@
 {recode,restring} = require('./src/recode.coffee')
 QQCode = require './src/qqcode'
 
+localSymbol = (證券代碼)->
+  if /^[0-9]{5}$/.test 證券代碼 # 港股等證券品種設置如下:
+    Number(證券代碼).toString()
+  else
+    證券代碼
+
+specialContract = (證券代碼)->
+  localSymbol = localSymbol(證券代碼)
+  if 證券代碼 in ['JPY','GBP','EUR','jpy','gbp','eur']
+    # 不應該出現這種情況!
+    throw
+      message: "證券代碼不對"
+      value: 證券代碼
+      toString: "#{value}: #{message}"
+  else if /^[0-9]{5}$/.test 證券代碼 # 港股等證券品種設置如下:
+    currency = 'HKD'
+    if 證券代碼[0] in ['1','2']
+      currency: "HKD"
+      exchange: "SEHK"
+      secType: "WAR"
+      symbol: 'HSI'
+      localSymbol: localSymbol
+    else if 證券代碼[0] is '6'
+      currency: "HKD"
+      exchange: "SEHK"
+      secType: "IOPT"
+      symbol: 'HSI'
+      localSymbol: localSymbol
+    else
+      currency: "HKD"
+      exchange: "SEHK"
+      secType: "STK"
+      symbol: localSymbol
+      localSymbol: localSymbol
+
+
 # 注意 getTime()所取得的是UTC時間印記. 中國時間-8,美國時間+4即utc
 # 注意 getTime()所取得的是UTC時間印記. 中國時間-8,美國時間+4即utc
 # 須根據時區和市場確定??
@@ -35,3 +71,5 @@ module.exports =
   restring:restring
   nowTrading:nowTrading
   當日盤後:當日盤後
+  localSymbol:localSymbol
+  specialContract:specialContract

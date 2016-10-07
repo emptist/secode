@@ -13,6 +13,11 @@ class IBCode
   setContract:(@contract)->
     @證券代碼 = @contract.localSymbol
 
+    if @contract.primaryExch is 'SEHK'
+      @證券代碼 = "0000#{@證券代碼}"[-5..]
+
+    return this
+
   securityCode:(@證券代碼)->
     # 如果能確定contract 就不必secTypeName之類了
     if @證券代碼 in ['JPY','GBP','EUR','jpy','gbp','eur']
@@ -64,11 +69,16 @@ class IBCode
           @currency = 'USD'
           @secTypeName = 'stock'
 
+    return this
+
+
+
   # read contract from portfolio db
   # 存在問題: 美股的options,node-ib接口的localSymbol中間有空格,不知是否特意,須進一步研究
   contractDB: (portfolio)->
     {contract} = portfolio
     @setContract(contract)
+    return this
 
     # [未完備]
     #if primaryExch in ['NASDAQ'] # 還有哪些?

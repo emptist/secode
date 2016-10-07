@@ -13,7 +13,7 @@ class IBCode
   setContract:(@contract)->
     @證券代碼 = @contract.localSymbol
 
-  setSecurityCode:(@證券代碼)->
+  securityCode:(@證券代碼)->
     # 如果能確定contract 就不必secTypeName之類了
     if @證券代碼 in ['JPY','GBP','EUR','jpy','gbp','eur']
       # 不應該出現這種情況!

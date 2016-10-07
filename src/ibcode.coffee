@@ -59,6 +59,22 @@ class IBCode
           @currency = 'USD'
           @secTypeName = 'stock'
 
+  # read contract from portfolio db
+  # 存在問題: 美股的options,node-ib接口的localSymbol中間有空格,不知是否特意,須進一步研究
+  setContractFromPortfolio: (portfolio)->
+    {primaryExch,@secType,@symbol,@localSymbol} = portfolio
+    
+    if primaryExch in ['NASDAQ']
+      exchange = 'SMART'
+    else
+      exchange = primaryExch
+
+    @contract =
+      currency: @currency #"HKD"
+      exchange: exchange
+      secType: @secType #"WAR"
+      symbol: @symbol #'HSI'
+      localSymbol: @localSymbol
 
 
 

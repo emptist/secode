@@ -61,10 +61,11 @@ class IBCode
 
   # read contract from portfolio db
   # 存在問題: 美股的options,node-ib接口的localSymbol中間有空格,不知是否特意,須進一步研究
-  setContractFromPortfolio: (portfolio)->
+  contractDB: (portfolio)->
     {primaryExch,@secType,@symbol,@localSymbol} = portfolio
-    
-    if primaryExch in ['NASDAQ']
+
+    # [未完備]
+    if primaryExch in ['NASDAQ'] # 還有哪些?
       exchange = 'SMART'
     else
       exchange = primaryExch

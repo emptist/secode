@@ -8,14 +8,21 @@ class IBCode
   @isABC: (證券代碼)->
     /^[a-z]+$/i.test 證券代碼
 
+  @recodePosition: (position)->
+    position.證券代碼 = @contract(position.contract)
+    return position
+
+  @contract: (contract)->
+    證券代碼 = contract.localSymbol
+    if contract.primaryExch is 'SEHK'
+      證券代碼 = "0000#{證券代碼}"[-5..]
+    return 證券代碼
+
+
   constructor:(@證券代碼=null)->
 
-  setContract:(@contract)->
-    @證券代碼 = @contract.localSymbol
-
-    if @contract.primaryExch is 'SEHK'
-      @證券代碼 = "0000#{@證券代碼}"[-5..]
-
+  setContract: (@contract)->
+    @證券代碼 = @constructor.contract(@contract)
     return this
 
   securityCode:(@證券代碼)->

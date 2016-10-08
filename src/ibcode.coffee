@@ -12,17 +12,34 @@ class IBCode
     position.證券代碼 = @contract(position.contract)
     return position
 
+  # change contract, and return 證券代碼
   @contract: (contract)->
     證券代碼 = contract.localSymbol
     if contract.primaryExch is 'SEHK'
       證券代碼 = "0000#{證券代碼}"[-5..]
+    # [未完備]
+    if contract.primaryExch in ['NASDAQ'] # 還有哪些?
+      contract.exchange ?= 'SMART'
+    else
+      contract.exchange ?= primaryExch
+
     return 證券代碼
 
 
   constructor:(@證券代碼=null)->
 
+  # read contract from portfolio db
+  # 存在問題: 美股的options,node-ib接口的localSymbol中間有空格,不知是否特意,須進一步研究
+  contractDB: (portfolio)->
+    {contract} = portfolio
+    @setContract(contract)
+
+    return this
+
   setContract: (@contract)->
     @證券代碼 = @constructor.contract(@contract)
+    {@exchange,@currency,@localSymbol} = @contract
+
     return this
 
   securityCode:(@證券代碼)->
@@ -78,20 +95,6 @@ class IBCode
 
     return this
 
-
-
-  # read contract from portfolio db
-  # 存在問題: 美股的options,node-ib接口的localSymbol中間有空格,不知是否特意,須進一步研究
-  contractDB: (portfolio)->
-    {contract} = portfolio
-    @setContract(contract)
-    return this
-
-    # [未完備]
-    #if primaryExch in ['NASDAQ'] # 還有哪些?
-    #  @contract.exchange = 'SMART'
-    #else
-    #  @contract.exchange = primaryExch
 
 
 

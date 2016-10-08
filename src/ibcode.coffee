@@ -8,43 +8,33 @@ class IBCode
   @isABC: (證券代碼)->
     /^[a-z]+$/i.test 證券代碼
 
+  ### 已經在讀取信息第一時間改寫了ib接口傳來的 contract, 故這一切都不需要了
   @recodePosition: (position)->
-    position.證券代碼 ?= @contract(position.contract)
+    position.證券代碼 ?= @contract(@resetContract(position.contract))
     return position
 
   # change contract, and return 證券代碼
-  @contract: (contract)->
-    證券代碼 = contract.localSymbol
-    if contract.primaryExch is 'SEHK'
-      證券代碼 = "0000#{證券代碼}"[-5..]
+  @resetContract:(contract)->
     # [未完備]
     {primaryExch} = contract
     if primaryExch in ['NASDAQ'] # 還有哪些?
       contract.exchange ?= 'SMART'
     else
       contract.exchange ?= primaryExch
+    return contract
+
+  @contract: (contract)->
+    證券代碼 = contract.localSymbol
+    if contract.primaryExch is 'SEHK'
+      證券代碼 = "0000#{證券代碼}"[-5..]
 
     return 證券代碼
-
+  ###
 
   constructor:(@證券代碼=null)->
+    unless @證券代碼?
+      return
 
-  # read, modify position from portfolio db and
-  # return contract
-  # 存在問題: 美股的options,node-ib接口的localSymbol中間有空格,不知是否特意,須進一步研究
-  contractDB: (position)->
-    {@contract} = @constructor.recodePosition(position)
-    {@exchange,@currency,@localSymbol} = @contract
-
-    return @contract
-
-  setContract: (@contract)->
-    @證券代碼 ?= @constructor.contract(@contract)
-    {@exchange,@currency,@localSymbol} = @contract
-
-    return this
-
-  securityCode:(@證券代碼)->
     # 如果能確定contract 就不必secTypeName之類了
     if @證券代碼 in ['JPY','GBP','EUR','jpy','gbp','eur']
       # 不應該出現這種情況!
@@ -95,10 +85,9 @@ class IBCode
           @currency = 'USD'
           @secTypeName = 'stock'
 
+  setContract: (@contract)->
+    {@證券代碼, @exchange,@currency,@localSymbol} = @contract
     return this
-
-
-
 
 
 module.exports = IBCode

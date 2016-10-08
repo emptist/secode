@@ -9,7 +9,7 @@ class IBCode
     /^[a-z]+$/i.test 證券代碼
 
   @recodePosition: (position)->
-    position.證券代碼 = @contract(position.contract)
+    position.證券代碼 ?= @contract(position.contract)
     return position
 
   # change contract, and return 證券代碼
@@ -29,16 +29,17 @@ class IBCode
 
   constructor:(@證券代碼=null)->
 
-  # read contract from portfolio db
+  # read, modify position from portfolio db and
+  # return contract
   # 存在問題: 美股的options,node-ib接口的localSymbol中間有空格,不知是否特意,須進一步研究
-  contractDB: (portfolio)->
-    {contract} = portfolio
-    @setContract(contract)
+  contractDB: (position)->
+    {@contract} = @constructor.recodePosition(position)
+    {@exchange,@currency,@localSymbol} = @contract
 
-    return this
+    return @contract
 
   setContract: (@contract)->
-    @證券代碼 = @constructor.contract(@contract)
+    @證券代碼 ?= @constructor.contract(@contract)
     {@exchange,@currency,@localSymbol} = @contract
 
     return this
@@ -61,7 +62,7 @@ class IBCode
       #
       # 例如渦輪 12748 其交易資料:
       # https://pennies.interactivebrokers.com/cstools/contract_info/v3.9/index.php?action=Conid%20Info&wlId=IB&conid=244214753&lang=en
-      @contract =
+      @contract ?=
         if @證券代碼[0] in ['1','2']
           currency: @currency
           exchange: @exchange

@@ -18,7 +18,8 @@ class IBCode
     if contract.primaryExch is 'SEHK'
       證券代碼 = "0000#{證券代碼}"[-5..]
     # [未完備]
-    if contract.primaryExch in ['NASDAQ'] # 還有哪些?
+    {primaryExch} = contract
+    if primaryExch in ['NASDAQ'] # 還有哪些?
       contract.exchange ?= 'SMART'
     else
       contract.exchange ?= primaryExch

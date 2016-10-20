@@ -7,7 +7,7 @@ class IBCode
 
   @isABC: (證券代碼)->
     /^[a-z]+$/i.test 證券代碼
-  
+
   # [臨時] 粗略定義ib的最小交易單位
   @volBase: (證券代碼, contract)->
     {secType, exchange} = contract
@@ -22,9 +22,31 @@ class IBCode
     else if (secType in ['OPT','CASH']) or (exchange is 'SMART')
       1
     else
-      500 
+      500
 
+  @priceVol: (證券代碼, contract, price, vol)->
+    {secType, exchange} = contract
+    if 證券代碼 in ['00700']
+      volBase = 100
+    # 外匯不一定,25000是優惠門檻而已
+    #else if secType is 'CASH'
+    #  25000
+    else if secType is 'IOPT'
+      volBase = 10000
+    # 美股/期權都是1為最小單位
+    else if (secType in ['OPT','CASH']) or (exchange is 'SMART')
+      volBase = 1
+    else
+      volBase = 500
 
+    fix = if secType is 'STK' then 2 else 3
+    p = price?.toFixed(fix)
+
+    obj =
+      price: if p? then Number(p) else null
+      vol: vol // volBase * volBase
+
+    return obj
   ### 已經在讀取信息第一時間改寫了ib接口傳來的 contract, 故這一切都不需要了
   @recodePosition: (position)->
     position.證券代碼 ?= @contract(@resetContract(position.contract))
@@ -108,3 +130,7 @@ class IBCode
 
 
 module.exports = IBCode
+
+###
+console.log IBCode.priceVol('000700','secType':'STK', 123.333345, 33333.3333)
+###

@@ -110,11 +110,13 @@ class IBCode
           secType: "STK"
           symbol: @localSymbol
           localSymbol: @localSymbol
+      @secType = @contract.secType
     else
       # 不能確定contract,但能提供localSymbol,secTypeName,currency等信息,由ib接口解決
       @contract = null
       @localSymbol = @證券代碼
       if @constructor.isForex(@證券代碼)  # 外匯設置如下:
+        @secType = 'CASH'
         @secTypeName = 'forex'
         @currency = @symbol = @證券代碼.toUpperCase().replace('.','').replace('USD','')
       else
@@ -123,11 +125,14 @@ class IBCode
         if @constructor.isABC(@證券代碼)
           @currency = 'USD'
           @secTypeName = 'stock'
+          @secType = 'STK'
 
   setContract: (@contract)->
     {@證券代碼, @exchange,@currency,@localSymbol} = @contract
     return this
 
+  parameters:(options)->
+    return options[@secType]
 
 module.exports = IBCode
 

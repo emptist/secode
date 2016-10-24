@@ -30,14 +30,14 @@ class IBCode
     if 證券代碼 in ['00700']
       volBase = 100
     # 外匯不一定,25000是優惠門檻而已
-    #else if secType is 'CASH'
-    #  25000
+    else if secType is 'CASH'
+      priceBase = 0.005
+      #  25000
     else if secType is 'IOPT'
       volBase = 10000
     # 美股/期權都是1為最小單位
     else if (secType in ['OPT','CASH']) or (exchange is 'SMART')
       volBase = 1
-      priceBase = 0.005
     else
       volBase = 500
 

@@ -26,6 +26,7 @@ class IBCode
 
   @priceVol: (證券代碼, contract, price, vol)->
     {secType, exchange} = contract
+    priceBase = 1
     if 證券代碼 in ['00700']
       volBase = 100
     # 外匯不一定,25000是優惠門檻而已
@@ -36,11 +37,12 @@ class IBCode
     # 美股/期權都是1為最小單位
     else if (secType in ['OPT','CASH']) or (exchange is 'SMART')
       volBase = 1
+      priceBase = 0.005
     else
       volBase = 500
 
     fix = if secType is 'STK' then 2 else 3
-    p = price?.toFixed(fix)
+    p = (price?//priceBase*priceBase).toFixed(fix)
 
     obj =
       price: if p? then Number(p) else null

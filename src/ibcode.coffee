@@ -45,8 +45,8 @@ class IBCode
     p = (price?//priceBase*priceBase).toFixed(fix)
 
     obj =
-      price: if p? then Number(p) else null
-      vol: vol // volBase * volBase
+      cleanPrice: if p? then Number(p) else null
+      cleanVol: vol // volBase * volBase
 
     return obj
   ### 已經在讀取信息第一時間改寫了ib接口傳來的 contract, 故這一切都不需要了

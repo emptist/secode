@@ -27,12 +27,12 @@ class IBCode
   @priceVol: (證券代碼, contract, price, vol)->
     {secType, exchange} = contract
     priceBase = 1
+    volBase = 1
     if 證券代碼 in ['00700']
       volBase = 100
     # 外匯不一定,25000是優惠門檻而已
     else if secType is 'CASH'
       priceBase = 0.005
-      #  25000
     else if secType is 'IOPT'
       volBase = 10000
     # 美股/期權都是1為最小單位
@@ -42,11 +42,14 @@ class IBCode
       volBase = 500
 
     fix = if secType is 'STK' then 2 else 3
-    p = (price?//priceBase*priceBase).toFixed(fix)
+    if price?
+      p = (price//priceBase*priceBase).toFixed(fix)
+    else
+      p = null
 
     obj =
       cleanPrice: if p? then Number(p) else null
-      cleanVol: vol // volBase * volBase
+      cleanVol: (vol // volBase * volBase)
 
     return obj
   ### 已經在讀取信息第一時間改寫了ib接口傳來的 contract, 故這一切都不需要了

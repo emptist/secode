@@ -26,7 +26,7 @@ class IBCode
 
   @priceVol: (證券代碼, contract, price, vol)->
     {secType, exchange} = contract
-    priceBase = 1
+    priceBase = 0.0001
     volBase = 1
     if 證券代碼 in ['00700']
       volBase = 100

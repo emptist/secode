@@ -19,6 +19,8 @@ nowTrading = (證券代碼) ->
     when 'g' then return (d.getDay() < 7) and ((16 + 4) > h > (8 + 4))
     when 'f' then return (d.getDay() < 6) and (((h is 17) and (m > 15)) or (h isnt 17))
 
+timeReady = (證券代碼,delta) ->
+
 當日盤後 = (證券代碼) ->
   d = new Date()
   h = d.getUTCHours()

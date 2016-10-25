@@ -1,4 +1,24 @@
+moment = require 'moment'
+
 class IBCode
+  # [未完成]
+  @marketOpen: (證券代碼)->
+    return
+
+  # [未完成]
+  @marketClose: (證券代碼)->
+    return
+
+  # [未完成]
+  @timeReady:(證券代碼,delta)->
+    return true if delta is 0
+
+    if delta > 0 # 開盤時間之後 delta 分鐘
+      return moment().utc()?
+    else # 收盤時間之前 delta 分鐘
+      return moment().utc()?
+
+
   @isForex: (證券代碼)->
     (證券代碼.length is 7) and (/usd/i.test 證券代碼)
 

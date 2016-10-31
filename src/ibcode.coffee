@@ -24,6 +24,12 @@ class IBCode
 
   @isHK: (證券代碼)->
     /^[0-9]{5}$/.test 證券代碼
+  @isHKIOPT:(證券代碼)->
+    @isHK(證券代碼) and (證券代碼[0] is '6')
+  @isHKWAR:(證券代碼)->
+    @isHK(證券代碼) and (證券代碼[0] in ['1','2'])   
+  @isHKIOPTWAR:(證券代碼)->
+    @isHKIOPT(證券代碼) or @isHKWAR(證券代碼)
 
   @isABC: (證券代碼)->
     /^[a-z]+$/i.test 證券代碼
@@ -43,6 +49,14 @@ class IBCode
       1
     else
       500
+  
+  @priceBase:(證券代碼,contract)->
+    if @isForex(證券代碼)
+      0.005
+    else if @isHKIOPTWAR(證券代碼)
+      0.001
+    else
+      0.01
 
   @priceVol: (證券代碼, contract, price, vol)->
     {secType, exchange} = contract
@@ -72,27 +86,34 @@ class IBCode
       cleanVol: (vol // volBase * volBase)
 
     return obj
+
+
+  @tooClose:(證券代碼,price1,price2,times=1)->
+    @priceBase(證券代碼)*times > Math.abs(price2 - price1)
+
+
+
   ### 已經在讀取信息第一時間改寫了ib接口傳來的 contract, 故這一切都不需要了
-  @recodePosition: (position)->
-    position.證券代碼 ?= @contract(@resetContract(position.contract))
-    return position
+    @recodePosition: (position)->
+      position.證券代碼 ?= @contract(@resetContract(position.contract))
+      return position
 
-  # change contract, and return 證券代碼
-  @resetContract:(contract)->
-    # [未完備]
-    {primaryExch} = contract
-    if primaryExch in ['NASDAQ'] # 還有哪些?
-      contract.exchange ?= 'SMART'
-    else
-      contract.exchange ?= primaryExch
-    return contract
+    # change contract, and return 證券代碼
+    @resetContract:(contract)->
+      # [未完備]
+      {primaryExch} = contract
+      if primaryExch in ['NASDAQ'] # 還有哪些?
+        contract.exchange ?= 'SMART'
+      else
+        contract.exchange ?= primaryExch
+      return contract
 
-  @contract: (contract)->
-    證券代碼 = contract.localSymbol
-    if contract.primaryExch is 'SEHK'
-      證券代碼 = "0000#{證券代碼}"[-5..]
+    @contract: (contract)->
+      證券代碼 = contract.localSymbol
+      if contract.primaryExch is 'SEHK'
+        證券代碼 = "0000#{證券代碼}"[-5..]
 
-    return 證券代碼
+      return 證券代碼
   ###
 
   constructor:(@證券代碼=null)->

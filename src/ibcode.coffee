@@ -104,6 +104,8 @@ class IBCode
       t: t
       m: (delta + price1)/price1
     }
+
+    
   constructor:(@證券代碼=null)->
     unless @證券代碼?
       return

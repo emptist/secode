@@ -93,7 +93,7 @@ class IBCode
     t = delta > Math.abs(price2 - price1)
     return {
       t: t 
-      m: (delta + price1)/price1
+      m: ((delta + price1)/price1) - 1
     }
 
   @tooFar:(證券代碼,price1,price2,times=2)->
@@ -102,7 +102,7 @@ class IBCode
     #(@priceBase(證券代碼)*times) < Math.abs(price2 - price1)
     return {
       t: t
-      m: (delta + price1)/price1
+      m: ((delta + price1)/price1) - 1
     }
 
     

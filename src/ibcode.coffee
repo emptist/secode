@@ -88,7 +88,7 @@ class IBCode
     return obj
 
 
-  @tooClose:(證券代碼,price1,price2,times=1)->
+  @tooClose:(證券代碼,price1,price2,times=2)->
     return false unless price1? and price2? 
     
     delta = @priceBase(證券代碼)*times
@@ -98,7 +98,7 @@ class IBCode
       m: ((delta + price1)/price1) - 1
     }
 
-  @tooFar:(證券代碼,price1,price2,times=2)->
+  @tooFar:(證券代碼,price1,price2,times=21)->
     return false unless price1? and price2? 
     
     delta = @priceBase(證券代碼)*times

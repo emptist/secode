@@ -89,6 +89,8 @@ class IBCode
 
 
   @tooClose:(證券代碼,price1,price2,times=1)->
+    return false unless price1? and price2? 
+    
     delta = @priceBase(證券代碼)*times
     t = delta > Math.abs(price2 - price1)
     return {
@@ -97,6 +99,8 @@ class IBCode
     }
 
   @tooFar:(證券代碼,price1,price2,times=2)->
+    return false unless price1? and price2? 
+    
     delta = @priceBase(證券代碼)*times
     t = delta < Math.abs(price2 - price1)
     #(@priceBase(證券代碼)*times) < Math.abs(price2 - price1)

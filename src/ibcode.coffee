@@ -87,29 +87,29 @@ class IBCode
 
     return obj
 
-
-  @tooClose:(證券代碼,price1,price2,times=2)->
+  # 小於n個報價單位,且小於 1 + 9.10/100
+  @tooClose:(證券代碼,price1,price2,n=1)->
     return false unless (price1? and price1 > 0) and (price2? and price2 > 0)
-    delta0 = @priceBase(證券代碼)
-    delta = delta0*times
-    pd = Math.abs(price2 - price1)
+    p = 9.10/100
+    pb = @priceBase(證券代碼)
+    delta = Math.abs(price2 - price1)
+    times = Math.max(price1,price2)/Math.min(price1,price2)
+    t1 = delta < (n * pb)
+    t2 = times < (1 + (n * p))
     
-    t1 = delta > pd
-    t2 = times*1.00191 > Math.max(price1,price2)/Math.min(price1,price2)
-    
-    return (t1 and (t2 or delta0 > pd)) 
+    return (t1 and t2) 
 
-
-  @tooFar:(證券代碼,price1,price2,times=21)->
+  # 大於 n 個報價單位, 或 大於 1 +  n 個 9.10/100
+  @tooFar:(證券代碼,price1,price2,n=1)->
     return false unless (price1? and price1 > 0) and (price2? and price2 > 0)
-    delta0 = @priceBase(證券代碼)
-    delta = delta0*times
-    pd = Math.abs(price2 - price1)
+    p = 9.10/100
+    pb = @priceBase(證券代碼)
+    delta = Math.abs(price2 - price1)
+    times = Math.max(price1,price2)/Math.min(price1,price2)
+    t1 = delta > (n * pb)
+    t2 = times > (1 + (n * p)) 
     
-    t1 = delta < pd
-    t2 = times*1.00382 < Math.max(price1,price2)/Math.min(price1,price2)
-    
-    return (t1 and (t2 and delta0 < pd))
+    return (t1 or t2)
     
     
   constructor:(@證券代碼=null)->

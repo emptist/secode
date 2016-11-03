@@ -95,7 +95,7 @@ class IBCode
     pd = Math.abs(price2 - price1)
     
     t1 = delta > pd
-    t2 = 1.00382 > Math.max(price1,price2)/Math.min(price1,price2)
+    t2 = times*1.00191 > Math.max(price1,price2)/Math.min(price1,price2)
     
     return (t1 and (t2 or delta0 > pd)) 
 
@@ -105,10 +105,9 @@ class IBCode
     delta0 = @priceBase(證券代碼)
     delta = delta0*times
     pd = Math.abs(price2 - price1)
-    delta = delta0*times
     
     t1 = delta < pd
-    t2 = 1.0191 < Math.max(price1,price2)/Math.min(price1,price2)
+    t2 = times*1.00382 < Math.max(price1,price2)/Math.min(price1,price2)
     
     return (t1 and (t2 and delta0 < pd))
     

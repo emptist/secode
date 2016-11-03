@@ -90,32 +90,28 @@ class IBCode
 
   @tooClose:(證券代碼,price1,price2,times=2)->
     return false unless (price1? and price1 > 0) and (price2? and price2 > 0)
-
     delta0 = @priceBase(證券代碼)
     delta = delta0*times
     pd = Math.abs(price2 - price1)
+    
     t1 = delta > pd
-    t2 = 1.00618 > Math.max(price1,price2)/Math.min(price1,price2)*times
-    return {
-      t: t1 and (t2 or delta0 > pd) 
-      m: ((delta + price1)/price1) - 1
-    }
+    t2 = 1.00382 > Math.max(price1,price2)/Math.min(price1,price2)
+    
+    return (t1 and (t2 or delta0 > pd)) 
+
 
   @tooFar:(證券代碼,price1,price2,times=21)->
     return false unless (price1? and price1 > 0) and (price2? and price2 > 0)
-    
     delta0 = @priceBase(證券代碼)
     delta = delta0*times
     pd = Math.abs(price2 - price1)
     delta = delta0*times
+    
     t = delta < pd
-    t2 = 1.0382 < Math.max(price1,price2)/Math.min(price1,price2)*times 
-    #(@priceBase(證券代碼)*times) < Math.abs(price2 - price1)
-    return {
-      t: t1 and (t2 and delta0 < pd)
-      m: ((delta + price1)/price1) - 1
-    }
-
+    t2 = 1.0191 < Math.max(price1,price2)/Math.min(price1,price2)
+    
+    return (t1 and (t2 and delta0 < pd))
+    
     
   constructor:(@證券代碼=null)->
     unless @證券代碼?

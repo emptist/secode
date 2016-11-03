@@ -107,7 +107,7 @@ class IBCode
     pd = Math.abs(price2 - price1)
     delta = delta0*times
     
-    t = delta < pd
+    t1 = delta < pd
     t2 = 1.0191 < Math.max(price1,price2)/Math.min(price1,price2)
     
     return (t1 and (t2 and delta0 < pd))
